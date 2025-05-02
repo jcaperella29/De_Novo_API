@@ -28,16 +28,17 @@ def run_trinity_job(job_id, left, right, output_dir, max_memory, cpu):
         db.commit()
 
         os.makedirs(output_dir, exist_ok=True)
+command = [
+    TRINITY_PATH,
+    "--seqType", "fq",
+    "--max_memory", max_memory,
+    "--left", left,
+    "--right", right,
+    "--CPU", str(cpu),
+    "--output", output_dir,
+    "--no_salmon"  # ✅ Default: skip abundance estimation
+]
 
-        command = [
-            TRINITY_PATH,
-            "--seqType", "fq",
-            "--max_memory", max_memory,
-            "--left", left,
-            "--right", right,
-            "--CPU", str(cpu),
-            "--output", output_dir
-        ]
 
         result = subprocess.run(
             command,
